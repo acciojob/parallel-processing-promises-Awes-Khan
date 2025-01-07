@@ -17,13 +17,14 @@ for(i=0;i<images.length;i++){
   				if(!response.ok){
   					throw new Error(`Failed to load image's URL: ${images[i].url}`);
   				} else {
-  					return response.blob()
+  					resolve(imageUrl);
+					// return response.blob()
   				}
-  			}).then((blob)=>{
-  				const imageUrl = URL.createObjectURL(blob);
-  				resolve(imageUrl);
-  			}).catch((error)=>{
-  				reject(error);
+  			// }).then((blob)=>{
+  			// 	const imageUrl = URL.createObjectURL(blob);
+  			// 	resolve(imageUrl);
+  			// }).catch((error)=>{
+  			// 	reject(error);
   			});
   	})
 

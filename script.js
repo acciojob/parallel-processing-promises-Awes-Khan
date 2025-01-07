@@ -8,29 +8,31 @@ const images = [
   { url: "https://picsum.photos/id/239/200/300" },
 ];
 let promises =[];
-for(i=0;i<images.length;i++){
-	
+
+images.forEach(obj => {
 	promises.push(
 	  new Promise((resolve, reject)=>{
-  		fetch(images[i].url)
+	    let url = obj.url;
+  		fetch(url)
   			.then( (response)=>{
   				if(!response.ok){
-  					throw new Error(`Failed to load image's URL: ${images[i].url}`);
+  					throw new Error(`Failed to load image's URL: ${obj.url}`);
   				} else {
-  					resolve(imageUrl);
-					// return response.blob()
+  				  console.log("response",response, resolve(obj.url));
+  				  resolve(obj.url);
+  				// 	return response.blob()
   				}
-  			// }).then((blob)=>{
-  			// 	const imageUrl = URL.createObjectURL(blob);
-  			// 	resolve(imageUrl);
-  			// }).catch((error)=>{
-  			// 	reject(error);
+  			})
+  		// 	.then((blob)=>{
+  		// 		const imageUrl = URL.createObjectURL(blob);
+  		// 		resolve(imageUrl);
+  		// 	})
+  			.catch((error)=>{
+  				reject(error);
   			});
   	})
-
-		// downloadImage(images[i].url)
 	);
-}
+});
 
 
 btn.addEventListener('click', () => {
@@ -38,6 +40,7 @@ Promise.all(promises)
 	.then((imageUrls)=>{
 		imageUrls.forEach(url => {
       const img = document.createElement('img');
+      // alert(url);
       img.src = url;
       output.appendChild(img);
     });
